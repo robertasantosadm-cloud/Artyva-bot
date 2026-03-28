@@ -18,7 +18,7 @@ const sessions = {};
 async function send(to, text) {
   try {
     await axios.post(`${EVOLUTION_URL}/message/sendText/${INSTANCE}`,
-      { number: to, text },
+      { number: to + '@s.whatsapp.net', text },
       { headers: { apikey: EVOLUTION_KEY } }
     );
   } catch (e) {
