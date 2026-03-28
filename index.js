@@ -7,7 +7,7 @@ app.use(express.json());
 
 const EVOLUTION_URL = process.env.EVOLUTION_URL || 'https://evolution-api-production-384c.up.railway.app';
 const EVOLUTION_KEY = process.env.EVOLUTION_KEY || '27057fa8106ef94d0f85bc25dceccba9b3cac1fc09906ee3f8f47092e175eeb2';
-const INSTANCE = process.env.INSTANCE_NAME || 'artyva';
+const INSTANCE = process.env.INSTANCE_NAME || 'Artyva';
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://bxqqygsuxvmdtjugesng.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_nxOSdcbaQ6uslLiCTVW5Vg_0-tWI3Xj';
 const PORT = process.env.PORT || 8080;
