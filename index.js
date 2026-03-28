@@ -125,7 +125,7 @@ app.post('/webhook', async (req, res) => {
       if (inp.fromMe === true) return res.sendStatus(200);
 
       from = String(inp.user || inp.remoteJid || '').replace('@s.whatsapp.net','').replace('@g.us','').trim();
-      text = String(inp.query || '').trim();
+      text = String(body.query || inp.query || '').trim();
 
       console.log('FROM:', from, '| TEXT:', text);
     }
