@@ -122,7 +122,7 @@ app.post('/webhook', async (req, res) => {
 
       // extrai texto — query pode ser string vazia, usa trim pra garantir
       console.log('🔎 inputs completo:', JSON.stringify(body.inputs));
-const rawText = body.inputs.query || body.inputs.message || body.inputs.text || body.inputs.content || Object.values(body.inputs)[0] || '';
+const rawText = body.inputs.query || body.inputs.message || body.inputs.text || body.inputs.content || '';
       text = (rawText !== undefined && rawText !== null) ? String(rawText).trim() : '';
     }
     // ── FORMATO EVOLUTION API PADRÃO ──
