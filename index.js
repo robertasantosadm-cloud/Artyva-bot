@@ -106,7 +106,7 @@ async function processMessage(from, text) {
 app.post('/webhook', async (req, res) => {
   try {
     const body = req.body;
-    console.log('📨 Webhook:', JSON.stringify(body).substring(0, 400));
+    console.log('📨 Webhook COMPLETO:', JSON.stringify(body));
 
     let from = null;
     let text = null;
