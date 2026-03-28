@@ -106,31 +106,41 @@ async function processMessage(from, text) {
 app.post('/webhook', async (req, res) => {
   try {
     const body = req.body;
-    console.log('📨 Webhook:', JSON.stringify(body));
+    console.log('📨 Webhook recebido:', JSON.stringify(body));
 
     let from = null;
     let text = null;
 
-    if (body && body.inputs && body.inputs.query !== undefined) {
-      if (body.fromMe) return res.sendStatus(200);
-      from = (body.user || body.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
-      text = body.inputs.query;
-    } else if (body && body.session && body.remoteJid) {
-      if (body.fromMe) return res.sendStatus(200);
-      from = body.remoteJid.replace('@s.whatsapp.net', '');
-      text = body.text || (body.inputs && body.inputs.query) || '';
-    } else if (body && body.data && body.data.key) {
-      if (body.data.key.fromMe) return res.sendStatus(200);
-      from = body.data.key.remoteJid && body.data.key.remoteJid.replace('@s.whatsapp.net', '');
-      text = (body.data.message && body.data.message.conversation) || '';
-    } else if (body && body.key) {
-      if (body.key.fromMe) return res.sendStatus(200);
-      from = body.key.remoteJid && body.key.remoteJid.replace('@s.whatsapp.net', '');
-      text = (body.message && body.message.conversation) || '';
+    // ── FORMATO EVOLUTION BOT (inputs.query) ──
+    if (body && body.inputs) {
+      // ignora mensagens próprias
+      if (body.fromMe === true) return res.sendStatus(200);
+
+      // extrai número — testa todos os campos possíveis
+      const rawFrom = body.user || body.remoteJid || body.inputs.remoteJid || '';
+      from = rawFrom.replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
+
+      // extrai texto — query pode ser string vazia, usa trim pra garantir
+      const rawText = body.inputs.query;
+      text = (rawText !== undefined && rawText !== null) ? String(rawText).trim() : '';
+    }
+    // ── FORMATO EVOLUTION API PADRÃO ──
+    else if (body && body.data && body.data.key) {
+      if (body.data.key.fromMe === true) return res.sendStatus(200);
+      from = (body.data.key.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
+      text = (body.data.message && (body.data.message.conversation || body.data.message.extendedTextMessage?.text || '')) || '';
+    }
+    // ── FORMATO ALTERNATIVO ──
+    else if (body && body.key) {
+      if (body.key.fromMe === true) return res.sendStatus(200);
+      from = (body.key.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
+      text = (body.message && (body.message.conversation || body.message.extendedTextMessage?.text || '')) || '';
     }
 
+    console.log(`🔍 from="${from}" text="${text}"`);
+
     if (!from || !text) {
-      console.log('⚠️ Ignorado:', JSON.stringify({from, text}));
+      console.log('⚠️ Ignorado — from ou text vazio');
       return res.sendStatus(200);
     }
 
@@ -142,6 +152,7 @@ app.post('/webhook', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Artyva Bot rodando! 🌿' });
 });
