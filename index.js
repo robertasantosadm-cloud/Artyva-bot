@@ -121,7 +121,8 @@ app.post('/webhook', async (req, res) => {
       from = rawFrom.replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
 
       // extrai texto — query pode ser string vazia, usa trim pra garantir
-      const rawText = body.inputs.query;
+      console.log('🔎 inputs completo:', JSON.stringify(body.inputs));
+const rawText = body.inputs.query || body.inputs.message || body.inputs.text || body.inputs.content || Object.values(body.inputs)[0] || '';
       text = (rawText !== undefined && rawText !== null) ? String(rawText).trim() : '';
     }
     // ── FORMATO EVOLUTION API PADRÃO ──
