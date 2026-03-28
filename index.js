@@ -111,28 +111,15 @@ app.post('/webhook', async (req, res) => {
     let from = null;
     let text = null;
 
-    // ── FORMATO EVOLUTION BOT (inputs.query) ──
     if (body && body.inputs) {
-      // ignora mensagens próprias
-      if (body.fromMe === true) return res.sendStatus(200);
-
-      // extrai número — testa todos os campos possíveis
-      const rawFrom = body.user || body.remoteJid || body.inputs.remoteJid || '';
-      from = rawFrom.replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
-
-      // extrai texto — query pode ser string vazia, usa trim pra garantir
-      console.log('🔎 inputs completo:', JSON.stringify(body.inputs));
-const rawText = body.inputs.query || body.inputs.message || body.inputs.text || body.inputs.content || '';
-      text = (rawText !== undefined && rawText !== null) ? String(rawText).trim() : '';
-    }
-    // ── FORMATO EVOLUTION API PADRÃO ──
-    else if (body && body.data && body.data.key) {
+      if (body.inputs.fromMe === true) return res.sendStatus(200);
+      from = (body.inputs.user || body.inputs.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
+      text = (body.inputs.query || '').trim();
+    } else if (body && body.data && body.data.key) {
       if (body.data.key.fromMe === true) return res.sendStatus(200);
       from = (body.data.key.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
       text = (body.data.message && (body.data.message.conversation || body.data.message.extendedTextMessage?.text || '')) || '';
-    }
-    // ── FORMATO ALTERNATIVO ──
-    else if (body && body.key) {
+    } else if (body && body.key) {
       if (body.key.fromMe === true) return res.sendStatus(200);
       from = (body.key.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '').trim();
       text = (body.message && (body.message.conversation || body.message.extendedTextMessage?.text || '')) || '';
