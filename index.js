@@ -113,7 +113,7 @@ app.post('/webhook', async (req, res) => {
 
     if (body && body.inputs && body.inputs.query !== undefined) {
       if (body.fromMe) return res.sendStatus(200);
-      from = (body.remoteJid || body.user || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
+      from = (body.user || body.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
       text = body.inputs.query;
     } else if (body && body.session && body.remoteJid) {
       if (body.fromMe) return res.sendStatus(200);
