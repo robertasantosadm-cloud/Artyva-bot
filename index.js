@@ -49,7 +49,7 @@ async function processMessage(from, text) {
   const s = sessions[from];
 
   if (s.phase === 'menu') {
-    await send(from, `Olá! 👋 Seja bem-vindo(a) à *Artyva*!\n\nSou a *Arty*, assistente virtual da Roberta. 🌿\n\nComo posso te ajudar hoje?\n\n1️⃣ Quero fazer um diagnóstico gratuito\n2️⃣ Conhecer serviços e investimento\n3️⃣ Agendar uma visita com a Roberta\n4️⃣ Falar diretamente com a Roberta`);
+    await send(from, `OlÃ¡! ð Seja bem-vindo(a) Ã  *Artyva*!\n\nSou a *Arty*, assistente virtual da Roberta. ð¿\n\nComo posso te ajudar hoje?\n\n1ï¸â£ Quero fazer um diagnÃ³stico gratuito\n2ï¸â£ Conhecer serviÃ§os e investimento\n3ï¸â£ Agendar uma visita com a Roberta\n4ï¸â£ Falar diretamente com a Roberta`);
     s.phase = 'aguarda_menu';
     return;
   }
@@ -57,17 +57,17 @@ async function processMessage(from, text) {
   if (s.phase === 'aguarda_menu') {
     if (msg === '1' || msg.includes('diagnos')) {
       s.phase = 'diag_empresa';
-      await send(from, `Que ótima escolha! 🎉 O diagnóstico da Artyva é *100% gratuito*!\n\nVou gerar um formulário personalizado pra você agora. 😊\n\nQual é o *nome da sua empresa ou negócio*?`);
+      await send(from, `Que Ã³tima escolha! ð O diagnÃ³stico da Artyva Ã© *100% gratuito*!\n\nVou gerar um formulÃ¡rio personalizado pra vocÃª agora. ð\n\nQual Ã© o *nome da sua empresa ou negÃ³cio*?`);
     } else if (msg === '2' || msg.includes('servi')) {
-      await send(from, `A *Artyva* oferece assessoria completa em 4 pilares:\n\n💰 *Gestão Financeira*\n⚙️ *Gestão Administrativa*\n👥 *Gestão de Pessoas*\n📊 *Consultoria Estratégica*\n\nDigite *1* para diagnóstico gratuito.`);
+      await send(from, `A *Artyva* oferece assessoria completa em 4 pilares:\n\nð° *GestÃ£o Financeira*\nâï¸ *GestÃ£o Administrativa*\nð¥ *GestÃ£o de Pessoas*\nð *Consultoria EstratÃ©gica*\n\nDigite *1* para diagnÃ³stico gratuito.`);
     } else if (msg === '3' || msg.includes('agend')) {
       s.phase = 'agendar';
-      await send(from, `Com prazer! 📅 Me passa seu *nome e empresa* que a Roberta entra em contato:`);
+      await send(from, `Com prazer! ð Me passa seu *nome e empresa* que a Roberta entra em contato:`);
     } else if (msg === '4' || msg.includes('roberta')) {
       s.phase = 'menu';
-      await send(from, `Claro! 🙋 A *Roberta* vai falar com você em breve!\n\n📞 *(11) 2368-4091*\n📧 artyva@artyva.com.br`);
+      await send(from, `Claro! ð A *Roberta* vai falar com vocÃª em breve!\n\nð *(11) 2368-4091*\nð§ artyva@artyva.com.br`);
     } else {
-      await send(from, `Não entendi. 😊 Digite:\n\n1️⃣ Diagnóstico\n2️⃣ Serviços\n3️⃣ Agendar\n4️⃣ Falar com Roberta`);
+      await send(from, `NÃ£o entendi. ð Digite:\n\n1ï¸â£ DiagnÃ³stico\n2ï¸â£ ServiÃ§os\n3ï¸â£ Agendar\n4ï¸â£ Falar com Roberta`);
     }
     return;
   }
@@ -75,36 +75,36 @@ async function processMessage(from, text) {
   if (s.phase === 'diag_empresa') {
     s.empresa = text.trim();
     s.phase = 'diag_segmento';
-    await send(from, `*${s.empresa}* — ótimo! 😊\n\nQual o *segmento*?\n\n1️⃣ Varejo\n2️⃣ Alimentação\n3️⃣ Serviços\n4️⃣ Construção Civil\n5️⃣ Saúde\n6️⃣ Indústria\n7️⃣ Outro`);
+    await send(from, `*${s.empresa}* â Ã³timo! ð\n\nQual o *segmento*?\n\n1ï¸â£ Varejo\n2ï¸â£ AlimentaÃ§Ã£o\n3ï¸â£ ServiÃ§os\n4ï¸â£ ConstruÃ§Ã£o Civil\n5ï¸â£ SaÃºde\n6ï¸â£ IndÃºstria\n7ï¸â£ Outro`);
     return;
   }
 
   if (s.phase === 'diag_segmento') {
-    const segs = {'1':'Varejo','2':'Alimentação','3':'Serviços','4':'Construção Civil','5':'Saúde','6':'Indústria','7':'Outro'};
+    const segs = {'1':'Varejo','2':'AlimentaÃ§Ã£o','3':'ServiÃ§os','4':'ConstruÃ§Ã£o Civil','5':'SaÃºde','6':'IndÃºstria','7':'Outro'};
     s.segmento = segs[msg] || text.trim();
     s.phase = 'diag_zap';
-    await send(from, `Perfeito! ✅\n\nÚltima pergunta: qual o seu *WhatsApp* com DDD?`);
+    await send(from, `Perfeito! â\n\nÃltima pergunta: qual o seu *WhatsApp* com DDD?`);
     return;
   }
 
   if (s.phase === 'diag_zap') {
     s.zap = text.trim();
     s.phase = 'aguarda_menu';
-    await send(from, `Gerando seu link... 📝`);
+    await send(from, `Gerando seu link... ð`);
     const id = await salvarCliente(s.empresa, s.segmento, s.zap);
-    await send(from, `Pronto! ✅\n\n🔗 https://diagnostico.artyva.com.br/formulario.html?id=${id}\n\nA *Roberta* vai analisar e entrar em contato! 🌿`);
-    await send(from, `Mais algo?\n\n1️⃣ Diagnóstico\n2️⃣ Serviços\n3️⃣ Agendar\n4️⃣ Roberta`);
+    await send(from, `Pronto! â\n\nð https://diagnostico.artyva.com.br/formulario.html?id=${id}\n\nA *Roberta* vai analisar e entrar em contato! ð¿`);
+    await send(from, `Mais algo?\n\n1ï¸â£ DiagnÃ³stico\n2ï¸â£ ServiÃ§os\n3ï¸â£ Agendar\n4ï¸â£ Roberta`);
     return;
   }
 
   if (s.phase === 'agendar') {
     s.phase = 'aguarda_menu';
-    await send(from, `Anotado! ✅ A *Roberta* entra em contato em breve. 🌿\n\n📞 (11) 2368-4091`);
+    await send(from, `Anotado! â A *Roberta* entra em contato em breve. ð¿\n\nð (11) 2368-4091`);
     return;
   }
 
   s.phase = 'aguarda_menu';
-  await send(from, `Olá! 😊\n\n1️⃣ Diagnóstico\n2️⃣ Serviços\n3️⃣ Agendar\n4️⃣ Roberta`);
+  await send(from, `OlÃ¡! ð\n\n1ï¸â£ DiagnÃ³stico\n2ï¸â£ ServiÃ§os\n3ï¸â£ Agendar\n4ï¸â£ Roberta`);
 }
 
 app.post('/webhook', async (req, res) => {
@@ -144,7 +144,7 @@ app.post('/webhook', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'Artyva Bot 🌿' });
+  res.json({ status: 'ok', message: 'Artyva Bot ð¿' });
 });
 
 app.listen(PORT, () => {
