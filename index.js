@@ -142,3 +142,10 @@ app.post('/webhook', async (req, res) => {
     res.sendStatus(500);
   }
 });
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Artyva Bot rodando! 🌿' });
+});
+
+app.listen(PORT, () => {
+  console.log(`🤖 Artyva Bot na porta ${PORT}`);
+});
