@@ -112,7 +112,10 @@ app.post('/webhook', async (req, res) => {
     let text = null;
 
     // Formato Evolution Bot — inputs.query + remoteJid
-    if (body && body.inputs && body.inputs.query !== undefined && body.remoteJid) {
+    if (body && body.inputs && body.inputs.query !== undefined) {
+  if (body.fromMe) return res.sendStatus(200);
+  from = (body.remoteJid || body.user || body.inputs.remoteJid || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
+  text = body.inputs.query;
       if (body.fromMe) return res.sendStatus(200);
       from = (body.remoteJid || body.user || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
       text = body.inputs.query;
