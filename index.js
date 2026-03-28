@@ -114,7 +114,7 @@ app.post('/webhook', async (req, res) => {
     // Formato Evolution Bot — inputs.query + remoteJid
     if (body && body.inputs && body.inputs.query !== undefined && body.remoteJid) {
       if (body.fromMe) return res.sendStatus(200);
-      from = body.remoteJid.replace('@s.whatsapp.net', '').replace('@g.us', '');
+      from = (body.remoteJid || body.user || '').replace('@s.whatsapp.net', '').replace('@g.us', '');
       text = body.inputs.query;
     }
     // Formato Evolution Bot com session
