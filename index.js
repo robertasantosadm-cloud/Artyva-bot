@@ -10,7 +10,7 @@ const EVOLUTION_KEY = process.env.EVOLUTION_KEY || '27057fa8106ef94d0f85bc25dcec
 const INSTANCE = process.env.INSTANCE_NAME || 'artyva';
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://bxqqygsuxvmdtjugesng.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_nxOSdcbaQ6uslLiCTVW5Vg_0-tWI3Xj';
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 const sessions = {};
