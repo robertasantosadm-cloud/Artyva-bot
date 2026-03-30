@@ -21,7 +21,7 @@ const ultimaPausa = {}; // controla quando Roberta pausou o bot por contato
 const DIAS_ATENDIMENTO = [1, 2, 3, 4, 5];
 const HORA_INICIO = 9;
 const HORA_FIM = 18;
-const TEMPO_RECORRENTE_MS = 24 * 60 * 60 * 1000; // 24 horas em ms
+const TEMPO_RECORRENTE_MS = 3 * 60 * 60 * 1000; // 3 horas em ms
 
 function dentroDoHorario() {
   const agora = new Date();
