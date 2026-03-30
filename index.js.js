@@ -359,7 +359,9 @@ app.post('/webhook', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
+app.get('/webhook', (req, res) => {
+  res.sendStatus(200);
+});
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Artyva Bot rodando!' });
 });
